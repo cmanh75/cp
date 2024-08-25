@@ -38,24 +38,14 @@ void solve() {
             }
         }
     }
-    int mx = 0;
+    int ans = 0;
     for (int i = 0; i < mi; i++) {
-        mx = max(mx, d[i]);
-    }
-    if (t > mx) {
-        int ans = 0;
-        for (int i = 0; i < mi; i++) {
-            ans += (mx - d[i]) / mi + 1;
+        if (t < d[i]) {
+            continue;
         }
-        cout << (t - mx) + ans;
+        ans += (t - d[i]) / mi + 1;
     }
-    else {
-        int ans = 0;
-        for (int i = 0; i <= t; i++) {
-            ans += (t - d[i]) / mi + 1;
-        }
-        cout << ans;
-    }
+    cout << ans;
 }
 
 int main() {

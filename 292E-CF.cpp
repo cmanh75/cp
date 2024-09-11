@@ -65,7 +65,7 @@ void solve() {
                 cout << b[x] << "\n";
             }
             else {
-                cout << a[u] << "\n";
+                cout << a[u] << "\n";;
             }
         }
     }

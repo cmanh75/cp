@@ -70,7 +70,7 @@ void solve() {
         }
     }
 }
-
+// alt + shift + n
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
@@ -80,7 +80,12 @@ int main() {
         freopen(task ".out", "w", stdout);
     }
     int test = 1;
+    // cout << "hi";
     while (test--) {
         solve();
     }
 }
+/*
+python main.py
+g++ ads.cpp -o a.exe
+*/

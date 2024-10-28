@@ -1,2 +1,2 @@
-
-        freopen(task ".inp", "r", stdin);
+,"r",stdin);
+ freopen(task".out","

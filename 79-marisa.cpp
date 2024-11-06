@@ -1,25 +1,29 @@
-//problem "85-marisa"
-//created in 08:32:26 - Mon 28/10/2024
+//problem "79-marisa"
+//created in 21:17:42 - Mon 28/10/2024
 #include<bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 5;
-int n, a[N];
+int n;
+long long s[N];
+pair < int, int > a[N];
 
 void solve() {
-    cin >> n;
+    int q;
+    cin >> n >> q;
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        cin >> a[i].second >> a[i].first;
     }
-    long long ans = 0;
     sort(a + 1, a + n + 1);
     for (int i = 1; i <= n; i++) {
-        for (int j = i + 1; j <= n; j++) {
-            int u = lower_bound(a + 1, a + n + 1, a[i] + a[j]) - a - 1;
-            ans += max(0, u - j);
-        }
+        s[i] = s[i - 1] + a[i].second;
     }
-    cout << ans << "\n";
+    while (q--) {
+        long long x;
+        cin >> x;
+        int u = lower_bound(s + 1, s + n + 1, x) - s;
+        cout << a[u].first << "\n";
+    }
 }
 
 int main() {

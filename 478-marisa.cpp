@@ -8,21 +8,18 @@ int q, n, a[N];
 stack < int > st;
 
 void solve() {
-    st.push(1);
-    st.push(1);
-    st.push(1);
-    st.push(1);
-    cout << st.size();
+    st.pop();
+    // cout << st.top();
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     #define task "test"
-//    if(fopen(task ".inp", "r")) {
-//        freopen(task ".inp", "r", stdin);
-//        freopen(task ".out", "w", stdout);
-//    }
+    if(fopen(task ".inp", "r")) {
+        freopen(task ".inp", "r", stdin);
+        freopen(task ".out", "w", stdout);
+    }
     int test = 1;
     while (test--) {
         solve();

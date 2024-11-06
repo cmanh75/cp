@@ -1,25 +1,29 @@
-//problem "85-marisa"
-//created in 08:32:26 - Mon 28/10/2024
+//problem "572-marisa"
+//created in 20:41:19 - Wed 30/10/2024
 #include<bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 5;
-int n, a[N];
+int dp[N], r[N], t[N];
 
 void solve() {
+    int n;
     cin >> n;
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        cin >> t[i];
     }
-    long long ans = 0;
-    sort(a + 1, a + n + 1);
+    for (int i = 2; i <= n; i++) {
+        cin >> r[i];
+    }
+    dp[0] = 0;
     for (int i = 1; i <= n; i++) {
-        for (int j = i + 1; j <= n; j++) {
-            int u = lower_bound(a + 1, a + n + 1, a[i] + a[j]) - a - 1;
-            ans += max(0, u - j);
+        if (i == 1) {
+            dp[i] = dp[i - 1] + t[i];
+            continue;
         }
+        dp[i] = min(dp[i - 2] + r[i], dp[i - 1] + t[i]);
     }
-    cout << ans << "\n";
+    cout << dp[n];
 }
 
 int main() {

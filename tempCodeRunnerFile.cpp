@@ -1,2 +1,1 @@
-,"r",stdin);
- freopen(task".out","
+1

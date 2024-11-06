@@ -1,25 +1,25 @@
-//problem "85-marisa"
-//created in 08:32:26 - Mon 28/10/2024
+//problem "159-marisa"
+//created in 15:21:04 - Wed 30/10/2024
 #include<bits/stdc++.h>
 using namespace std;
 
-const int N = 1e5 + 5;
-int n, a[N];
+const int N = 1e3 + 5;
+const int mod = 1e9 + 7;
+int n, k, dp[N][N], a[N];
 
 void solve() {
-    cin >> n;
+    cin >> n >> k;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    long long ans = 0;
-    sort(a + 1, a + n + 1);
+    dp[0][0] = 1;
     for (int i = 1; i <= n; i++) {
-        for (int j = i + 1; j <= n; j++) {
-            int u = lower_bound(a + 1, a + n + 1, a[i] + a[j]) - a - 1;
-            ans += max(0, u - j);
+        dp[i][0] = 1;
+        for (int j = 1; j <= k; j++) {
+            dp[i][j] = (dp[i - 1][j] + 1ll * dp[i - 1][j - 1] * a[i]) % mod;
         }
     }
-    cout << ans << "\n";
+    cout << dp[n][k];
 }
 
 int main() {

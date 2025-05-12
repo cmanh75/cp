@@ -1,52 +1,97 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define ll int
+#define fi first
+#define se second
+#define pb push_back
+#define task "test"
+
+const ll N=1e5+9;
+const ll mxN= 1e6+9;
+const ll Nmax=1e9+9;
+
 using namespace std;
-
-const int N = 1e6 + 5;
-const int mod = 1e9 + 7;
-int k;
-pair < int, int > f[N][22];
-string s;
-
-pair < int, int > get(int l, int r) {
-    int o = log2(r - l + 1);
-    return max(f[l][o], f[r - (1 << o) + 1][o]);
+ll n,tt,k,q,a[N];
+struct pt {ll l,r,x,pos;};
+pt t[N];
+ll d[N],b[N],ansc[N];
+bool cmp (pt a,pt b)
+{
+ if(a.l/k==b.l/k)
+  return a.r<b.r;
+ return a.l/k<b.l/k;    
 }
 
-void solve() {
-    cin >> s >> k;
-    int n = s.size();
-    for (int i = 0; i < n; i++) {
-        f[i][0] = make_pair(s[i], -i);
-    }
-    for (int i = 1; i <= log2(n); i++) {
-        for (int j = 0; j <= n - (1 << i); j++) {
-            f[j][i] = max(f[j][i - 1], f[j + (1 << (i - 1))][i - 1]);
-        }
-    }
-    int i = 0;
-    while (k != 0 && i + k < n) {
-        pair < int, int > u = get(i, i + k);
-        cout << s[-u.second];
-        k -= -u.second - i;
-        i = -u.second + 1;
-    }
-    if (k == 0) {
-        for (int j = i; j < n; j++) {
-            cout << s[j];
-        }
-    }
+void update(int x, int v) {
+    b[d[x]]--;
+    d[x] += v;
+    b[d[x]]++;
 }
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-    #define task "test"
-    if(fopen(task ".inp", "r")) {
-        freopen(task ".inp", "r", stdin);
-        freopen(task ".out", "w", stdout);
+void solve ()
+{
+ cin>>n>>q;
+ for(ll i=1;i<=n;i++){
+   cin>>a[i];}
+ k=sqrt(n);  
+ for(ll i=1;i<=q;i++){
+   cin>>t[i].l>>t[i].r>>t[i].x;
+   t[i].pos=i;
+ }
+ sort(t + 1, t + 1 + q, cmp);
+ ll i=1,j=0,ans=0;
+ for(ll z=1;z<=q;z++)
+  {
+    while (i < t[z].l) {
+        update(a[i++], -1);
     }
-    int test = 1;
-    while (test--) {
-        solve();
+    while (i > t[z].l) {
+        update(a[--i], 1);
     }
-}   
+    while (j < t[z].r) {
+        update(a[++j], 1);
+    }
+    while (j > t[z].r) {
+        update(a[j--], -1);
+    }
+    ansc[t[z].pos]=b[t[z].x];    
+  }
+ for(ll i=1;i<=q;i++)
+  cout<<ansc[i]<<'\n'; 
+}
+
+
+int main()
+{
+ ios_base::sync_with_stdio(false);
+ cin.tie(NULL);cout.tie(NULL);
+ if(fopen(task".INP", "r")) {
+  freopen(task".INP", "r", stdin);
+  freopen(task".OUT", "w", stdout);
+ }
+ tt=1;
+ while(tt--)
+  solve();
+ return 0;
+}
+
+
+/*
+
+
+1 2 3 4
+
+r=4
+
+while(j>r)
+{
+i--;
+d[a[i]]++;
+}
+
+
+5 2
+2 2 3 1 4
+1 5 1
+1 3 2
+
+*/

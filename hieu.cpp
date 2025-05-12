@@ -3,32 +3,52 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int N = 1e5 + 5;
-int n, a[N], k;
-
-bool check(int x) {
-    long long ans = 0;
-    for (int i = 1; i <= n; i++) {
-        ans += a[i] / x;
-    }
-    return ans >= k;
-}
+const int N = 2e5 + 5;
+int n, f[N], a[N], b[N], k1, k2;
 
 void solve() {
-    cin >> n >> k;
+    cin >> n >> k1 >> k2;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    int l = 1, r = 1e9, ans;
-    while (l <= r) {
-        int mid = (l + r) / 2;
-        if (check(mid)) {
-            ans = mid;
-            l = mid + 1;
+    for (int i = 1; i <= n; i++) {
+        cin >> b[i];
+    }
+    while (k1 > 0) {
+        int ans = -1, cs;
+        for (int i = 1; i <= n; i++) {
+            if (ans < abs(a[i] - b[i])) {
+                ans = abs(a[i] - b[i]);
+                cs = i;
+            }
+        }
+        if (a[cs] < b[cs]) {
+            a[cs]++;
         }
         else {
-            r = mid - 1;
+            a[cs]--;
         }
+        k1--;
+    }
+    while (k2 > 0) {
+        int ans = -1, cs;
+        for (int i = 1; i <= n; i++) {
+            if (ans < abs(a[i] - b[i])) {
+                ans = abs(a[i] - b[i]);
+                cs = i;
+            }
+        }
+        if (a[cs] < b[cs]) {
+            b[cs]--;
+        }
+        else {
+            b[cs]++;
+        }
+        k2--;
+    }
+    long long ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans += 1ll * (b[i] - a[i]) * (b[i] - a[i]);
     }
     cout << ans;
 }

@@ -1,30 +1,21 @@
-//problem "permutation"
-//created in 20:41:32 - Wed 09/10/2024
+//problem "subseq"
+//created in 20:38:22 - Wed 15/01/2025
 #include<bits/stdc++.h>
-#define piii pair < long long, pair < int, int > >
 using namespace std;
 
-const int N = 1e6 + 5;
-int n, a[N];
+const int N = 1e5 + 5;
+
+int n, x, a[N];
 
 void solve() {
-    cin >> n;
-    long long ans = 0;
-    int mi = 1e9, d = 0;
+    cin >> n >> x;
+    vector < int > s;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
-        ans += abs(a[i]);
-        if (a[i] < 0) {
-            d++;
-        }
-        int z = abs(a[i]);
-        mi = min(mi, z);
+        s.push_back(a[i] - x);
+        s.push_back(a[i] + x);
+        s.push_back(a[i]);
     }
-    if (d & 1) {
-        ans -= 2 * mi;
-    }
-    cout << ans << "\n";
-
 }
 
 int main() {

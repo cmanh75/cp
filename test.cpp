@@ -1,41 +1,44 @@
 //problem "test"
-//created in 14:30:57 - Sat 10/05/2025
+//created in 19:06:34 - Thu 15/05/2025
 #include<bits/stdc++.h>
 using namespace std;
 
-const int N = 3e3 + 5;
-int n, m, a[N], d[N];
+const int N = 2e3 + 5;
+const int mod = 1e9 + 7;
+string s;
+int n, m, dp[N][N][2];
+
+void add(int &x, int y) {
+	x = (x + y) % mod;
+}
 
 void solve() {
-	string s, t;
-	cin >> s >> t;
-	if (s.size() != t.size()) {
-		cout << "NO" << "\n";
-		return;
-	}
-	int d = 0, pos1 = -1, pos2;
-	for (int i = 0; i < s.size(); i++) {
-		if (s[i] != t[i]) {
-			d++;
-			if (pos1 < 0) {
-				pos1 = i;
-			}
-			else {
-				pos2 = i;
-			}
-		}
-	}
-	if (d != 2) {
-		cout << "NO" << "\n";
-	}
-	else {
-		if (s[pos1] == t[pos2] && s[pos2] == t[pos1]) {
-			cout << "YES" << "\n";
+	cin >> n >> m >> s;
+	int r = 0, d = 0;
+	for (int i = 0; i < m; i++) {
+		if (s[i] == ')') {
+			d--;
 		}
 		else {
-			cout << "NO" << "\n";
+			d++;
+		}
+		r = min(r, d);
+	}
+	dp[0][0][0] = 1;
+	for (int i = 1; i <= n - m + 1; i++) {
+		for (int j = 0; j <= n - m + 1; j++) {
+			for (int k = 0; k < 2; k++) {
+				add(dp[i][j + 1][k], dp[i - 1][j][k]);
+				if (j > 0) {
+					add(dp[i][j - 1][k], dp[i - 1][j][k]);
+				}
+			}
+			if (j + r >= 0 && j + d <= (n - m + 1)) {
+				add(dp[i][j + d][1], dp[i - 1][j][0]);
+			}
 		}
 	}
+	cout << dp[n - m + 1][0][1];
 }
 
 int main() {
